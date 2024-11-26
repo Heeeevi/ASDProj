@@ -12,6 +12,7 @@ public class TTT {
     public static final int NOUGHT  = 1;
     public static final int NO_SEED = 2;
 
+
     // The game board
     public static final int ROWS = 3, COLS = 3;  // number of rows/columns
     public static int[][] board = new int[ROWS][COLS]; // EMPTY, CROSS, NOUGHT
@@ -30,7 +31,7 @@ public class TTT {
     public static Scanner in = new Scanner(System.in); // the input Scanner
 
     /** The entry main method (the program starts here) */
-    public static void main(String[] args) {
+    public void play(){
         // Initialize the board, currentState and currentPlayer
         initGame();
 
@@ -154,4 +155,5 @@ public class TTT {
             case NO_SEED: System.out.print("   "); break;
         }
     }
+
 }
