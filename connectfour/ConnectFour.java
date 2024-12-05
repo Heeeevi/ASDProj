@@ -25,7 +25,7 @@ public class ConnectFour extends JPanel {
     private JLabel statusBar;    // for displaying status message
 
     /** Constructor to setup the UI and game components */
-    public GameMain() {
+    public ConnectFour() {
 
         // This JPanel fires MouseEvent
         super.addMouseListener(new MouseAdapter() {
@@ -120,7 +120,7 @@ public class ConnectFour extends JPanel {
             public void run() {
                 JFrame frame = new JFrame(TITLE);
                 // Set the content-pane of the JFrame to an instance of main JPanel
-                frame.setContentPane(new GameMain());
+                frame.setContentPane(new ConnectFour());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setLocationRelativeTo(null); // center the application window
