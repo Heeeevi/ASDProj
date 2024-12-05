@@ -70,6 +70,7 @@ public class Board {
                 && cells[0][2].content == player
                 && cells[1][1].content == player
                 && cells[2][0].content == player) {
+            //SoundEffect.YEAY.play();
             return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
         } else {
             // Nobody win. Check for DRAW (all cells occupied) or PLAYING.

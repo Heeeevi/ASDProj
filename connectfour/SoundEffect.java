@@ -20,7 +20,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * For Eclipse, place the audio file under "src", which will be copied into "bin".
  */
 public enum SoundEffect {
-    EAT_FOOD("mouse-click-104737.wav"),
+    EAT_FOOD("audio/click.wav"),
     EXPLODE("audio/explode.wav"),
     DIE("audio/die.wav");
 
