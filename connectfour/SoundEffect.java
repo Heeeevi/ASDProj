@@ -21,8 +21,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public enum SoundEffect {
     EAT_FOOD("audio/click.wav"),
-    EXPLODE("audio/explode.wav"),
-    DIE("audio/die.wav");
+    EXPLODE("audio/oiia.wav"),
+    DIE("audio/maxwell.wav");
 
     /** Nested enumeration for specifying volume */
     public static enum Volume {
