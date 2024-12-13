@@ -106,16 +106,16 @@ public class ConnectFour extends JPanel {
         // Print status-bar message
         if (currentState == State.PLAYING) {
             statusBar.setForeground(Color.BLACK);
-            statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
+            statusBar.setText((currentPlayer == Seed.CROSS) ? "Maxwell's Turn" : "Oiia Cat's Turn");
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again.");
         } else if (currentState == State.CROSS_WON) {
             statusBar.setForeground(Color.RED);
-            statusBar.setText("'X' Won! Click to play again.");
+            statusBar.setText("'Maxwell' Won! Click to play again.");
         } else if (currentState == State.NOUGHT_WON) {
             statusBar.setForeground(Color.RED);
-            statusBar.setText("'O' Won! Click to play again.");
+            statusBar.setText("'Oiia' Won! Click to play again.");
         }
     }
 
