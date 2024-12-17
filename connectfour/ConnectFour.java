@@ -7,6 +7,10 @@ import javax.swing.*;
  * Tic-Tac-Toe: Two-player Graphic version with better OO design.
  * The Board and Cell classes are separated in their own classes.
  * NOW AVAILABLE WITH AI as ENEMY with 3 Various Difficulty NOOB,SMART and TRICKSTER
+ * AI Characteristics
+ * NOOB = Play with no strategy, just a noob AI
+ * SMART = Focus To Make You Never WON, but instead his Step is Creepy
+ * TRICKSTER = Focus On win, this one is really though opponent
  */
 public class ConnectFour extends JPanel {
     private static final long serialVersionUID = 1L;
