@@ -17,7 +17,7 @@ public class ConnectFour extends JPanel {
     private JLabel statusBar;
 
     private AIPlayer aiPlayer;  // Tambahkan AI
-    private boolean aiEnabled;  // Apakah AI diaktifkan?
+    private boolean aiEnabled;  // boolean untuk player ingin bertarung dengan orang atau AI
 
     public ConnectFour() {
         // Pilih mode permainan: Single Player atau Multiplayer
@@ -32,6 +32,7 @@ public class ConnectFour extends JPanel {
                     "AI Difficulty", JOptionPane.QUESTION_MESSAGE, null, difficulties, difficulties[0]);
             aiPlayer = new AIPlayer(Seed.NOUGHT, chosenDifficulty);
         }
+        /** Constructor to setup the UI and game components */
 
         super.addMouseListener(new MouseAdapter() {
             @Override
@@ -82,17 +83,17 @@ public class ConnectFour extends JPanel {
         super.add(statusBar, BorderLayout.PAGE_END);
         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
     }
-
+    /** Initialize the game (run once) */
     public void initGame() {
         board = new Board();
     }
-
+    /** Reset the game-board contents and the current-state, ready for new game */
     public void newGame() {
         board.newGame();
         currentPlayer = Seed.CROSS;
         currentState = State.PLAYING;
     }
-
+    /** Custom painting codes on this JPanel */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -101,7 +102,7 @@ public class ConnectFour extends JPanel {
                 ? (currentPlayer == Seed.CROSS ? "Maxwell's Turn" : "Oiia Cat's Turn")
                 : currentState.toString());
     }
-
+    /** The entry "main" method */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Connect Four");
