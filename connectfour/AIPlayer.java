@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class AIPlayer {
-    private Seed aiSeed; // Seed untuk AI
-    private Seed opponentSeed; // Seed lawan
+    private Seed aiSeed;
+    private Seed opponentSeed;
     private Random rand;
-    private String difficulty; // Tingkat kesulitan AI
+    private String difficulty; // Tingkat Difficulty AI
 
     public AIPlayer(Seed aiSeed, String difficulty) {
         this.aiSeed = aiSeed;
@@ -54,9 +54,9 @@ public class AIPlayer {
         return noobMove(board);
     }
 
-    /** AI Trickster: Fokus menjebak lawan */
+    /** AI Trickster: Suka Njebak lawan, cenderung ngincar kemenangan */
     private int[] tricksterMove(Board board) {
-        // AI akan memprioritaskan langkah tertentu untuk menjebak
+        // Strategi AI untuk memprioritaskan langkah tertentu untuk menjebak
         for (int row = 0; row < Board.ROWS; row++) {
             for (int col = 0; col < Board.COLS; col++) {
                 if (board.cells[row][col].content == Seed.NO_SEED) {
@@ -67,18 +67,18 @@ public class AIPlayer {
         return noobMove(board);
     }
 
-    /** Cari langkah yang bisa menghasilkan kemenangan */
+    /** Cari langkah untuk menang */
     private int[] findWinningMove(Board board, Seed seed) {
         for (int row = 0; row < Board.ROWS; row++) {
             for (int col = 0; col < Board.COLS; col++) {
                 if (board.cells[row][col].content == Seed.NO_SEED) {
-                    board.cells[row][col].content = seed; // Simulasi langkah
+                    board.cells[row][col].content = seed;
                     if (board.stepGame(seed, row, col) ==
                             (seed == Seed.CROSS ? State.CROSS_WON : State.NOUGHT_WON)) {
-                        board.cells[row][col].content = Seed.NO_SEED; // Kembalikan
+                        board.cells[row][col].content = Seed.NO_SEED;
                         return new int[]{row, col};
                     }
-                    board.cells[row][col].content = Seed.NO_SEED; // Kembalikan
+                    board.cells[row][col].content = Seed.NO_SEED;
                 }
             }
         }
