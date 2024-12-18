@@ -1,5 +1,6 @@
 package connectfour;
 
+import javax.swing.*;
 import java.awt.*;
 /**
  * The Board class models the ROWS-by-COLS game board.
@@ -59,18 +60,27 @@ public class Board {
         if (cells[selectedRow][0].content == player  // 3-in-the-row
                 && cells[selectedRow][1].content == player
                 && cells[selectedRow][2].content == player
+                && cells[selectedRow][3].content == player
+                && cells[selectedRow][4].content == player
                 || cells[0][selectedCol].content == player // 3-in-the-column
                 && cells[1][selectedCol].content == player
                 && cells[2][selectedCol].content == player
+                && cells[3][selectedCol].content == player
+                && cells[4][selectedCol].content == player
                 || selectedRow == selectedCol     // 3-in-the-diagonal
                 && cells[0][0].content == player
                 && cells[1][1].content == player
                 && cells[2][2].content == player
-                || selectedRow + selectedCol == 2 // 3-in-the-opposite-diagonal
-                && cells[0][2].content == player
-                && cells[1][1].content == player
-                && cells[2][0].content == player) {
-            //SoundEffect.YEAY.play();
+                && cells[3][3].content == player
+                && cells[4][4].content == player
+                || selectedRow + selectedCol == 4 // 3-in-the-opposite-diagonal
+                && cells[0][4].content == player
+                && cells[1][3].content == player
+                && cells[2][2].content == player
+                && cells[3][1].content == player
+                && cells[4][0].content == player) {
+            SoundEffect.YEAY.play();
+            JOptionPane.showMessageDialog(null, player + "Wins");
             return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
         } else {
             // Nobody win. Check for DRAW (all cells occupied) or PLAYING.
