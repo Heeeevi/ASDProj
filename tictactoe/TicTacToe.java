@@ -1,8 +1,23 @@
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2024/2025
+ * Group Capstone Project
+ * Group #1
+ * 1 - 5026231102 - Ahmed Miftah Ghifari
+ * 2 - 5026231103 - Eric Vincentius Jaolis
+ * 3 - 5026231156 - Hafiyyuddin Ahmad
+ */
+
 package tictactoe;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
 /**
  * Tic-Tac-Toe: Two-player Graphic version with better OO design.
  * The Board and Cell classes are separated in their own classes.
@@ -19,6 +34,9 @@ public class TicTacToe extends JPanel {
     private State currentState;
     private Seed currentPlayer;
     private JLabel statusBar;
+    private JButton setVolume;
+
+    private static FloatControl volumeSetting;
 
     private AIPlayer aiPlayer;  // Tambahkan AI
     private boolean aiEnabled;  // boolean untuk player ingin bertarung dengan orang atau AI
@@ -72,6 +90,67 @@ public class TicTacToe extends JPanel {
         newGame();
     }
 
+    public static void playBGM(String filedir) {
+        new Thread(() -> {
+            try {
+                File music = new File(filedir);
+                if(music.exists()) {
+                    AudioInputStream audio = AudioSystem.getAudioInputStream(music);
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audio);
+
+                    volumeSetting = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    clip.start();
+                } else {
+                    System.out.println("Audio is not found");
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+//    public static void setVolume(float qty) {
+//        if(volumeSetting != null) {
+//            float oldVolume = volumeSetting.getValue();
+//            float newVolume = Math.max(volumeSetting.getMinimum(), Math.min(volumeSetting.getMaximum(), oldVolume + qty));
+//            volumeSetting.setValue(newVolume);
+//        }
+//    }
+
+    public static void displayVolumeSlider(JFrame parentButton) {
+        if(volumeSetting == null) {
+            JOptionPane.showMessageDialog(parentButton, "Music doesn't play", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JDialog volDialog = new JDialog(parentButton, "Control BGM Volume", true);
+        volDialog.setSize(350, 150);
+        volDialog.setLayout(new BoxLayout(volDialog.getContentPane(), BoxLayout.Y_AXIS));
+
+        JSlider volSlider = new JSlider(
+                (int) volumeSetting.getMinimum(),
+                (int) volumeSetting.getMaximum(),
+                (int) volumeSetting.getValue()
+        );
+        volSlider.setMajorTickSpacing(10);
+        volSlider.setPaintTicks(true);
+        volSlider.setPaintLabels(true);
+
+        JButton exit = new JButton("OK");
+
+        volSlider.addChangeListener(e -> volumeSetting.setValue(volSlider.getValue()));
+        exit.addActionListener(e -> volDialog.dispose());
+
+        volDialog.add(new JLabel("Set Volume: "));
+        volDialog.add(volSlider);
+
+        volDialog.setLocationRelativeTo(parentButton);
+        volDialog.setVisible(true);
+    }
+
     private void aiMove() {
         int[] move = aiPlayer.move(board);
         if (move != null) {
@@ -84,8 +163,28 @@ public class TicTacToe extends JPanel {
     private void setupUI() {
         statusBar.setFont(new Font("OCR A Extended", Font.PLAIN, 14));
         statusBar.setPreferredSize(new Dimension(300, 30));
+
+        JPanel navigationPanel = new JPanel(new BorderLayout());
+        navigationPanel.add(statusBar, BorderLayout.CENTER);
+        navigationPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+//        super.add(statusBar, BorderLayout.PAGE_END);
+
+//        JFrame parentButton = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        setVolume = new JButton("Set Volume");
+        setVolume.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+        setVolume.setMargin(new Insets(10,10,10,10));
+        setVolume.addActionListener(e -> {
+            JFrame parentButton = (JFrame) SwingUtilities.getWindowAncestor(this);
+            displayVolumeSlider(parentButton);
+        });
+        setVolume.setPreferredSize(new Dimension(100,30));
+        navigationPanel.add(setVolume, BorderLayout.EAST);
+
         super.setLayout(new BorderLayout());
-        super.add(statusBar, BorderLayout.PAGE_END);
+        super.add(navigationPanel, BorderLayout.PAGE_END);
+//        super.add(setVolume, BorderLayout.PAGE_END);
         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
     }
     /** Initialize the game (run once) */
@@ -97,6 +196,7 @@ public class TicTacToe extends JPanel {
         board.newGame();
         currentPlayer = Seed.CROSS;
         currentState = State.PLAYING;
+        playBGM("audio/retro-game-arcade-236133.wav");
     }
     /** Custom painting codes on this JPanel */
     @Override
