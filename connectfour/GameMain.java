@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  * Tic-Tac-Toe: Two-player Graphic version with better OO design.
  * The Board and Cell classes are separated in their own classes.
@@ -34,6 +36,9 @@ public class GameMain extends JPanel {
     private State currentState;  // the current state of the game
     private Seed currentPlayer;  // the current player
     private JLabel statusBar;    // for displaying status message
+    private Timer playerTimer;
+    private int timerCount;
+    private JLabel timerLabel;
 
     /** Constructor to setup the UI and game components */
     public GameMain() {
@@ -55,6 +60,7 @@ public class GameMain extends JPanel {
                                 board.cells[rowI][col].content = currentPlayer;
                                 board.stepGame(currentPlayer, rowI, col);
                                 currentPlayer = (currentPlayer == Seed.RED) ? Seed.BLUE : Seed.RED;
+                                resetTimer();
                                 break;
                             }
                         }
@@ -90,7 +96,16 @@ public class GameMain extends JPanel {
         statusBar.setHorizontalAlignment(JLabel.LEFT);
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
 
+        timerLabel = new JLabel("Timer: 10");
+        timerLabel.setFont(FONT_STATUS);
+        timerLabel.setHorizontalAlignment(JLabel.CENTER);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(timerLabel, BorderLayout.CENTER);
+
+
         super.setLayout(new BorderLayout());
+        super.add(topPanel, BorderLayout.PAGE_START);
         super.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
         // account for statusBar in height
@@ -115,6 +130,41 @@ public class GameMain extends JPanel {
         }
         currentPlayer = Seed.RED;    // cross plays first
         currentState = State.PLAYING;  // ready to play
+
+        if (playerTimer != null) {
+            playerTimer.cancel();
+        }
+        startTimer();
+    }
+
+    private void startTimer() {
+        timerCount = 10;
+        timerLabel.setText("Timer: " + timerCount);
+
+        playerTimer = new Timer();
+        playerTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                SwingUtilities.invokeLater(() -> {
+                    timerCount--;
+                    timerLabel.setText("Timer: " + timerCount);
+
+                    if (timerCount <= 0) {
+                        playerTimer.cancel();
+                        currentPlayer = (currentPlayer == Seed.RED) ? Seed.BLUE : Seed.RED; // Switch player
+                        resetTimer(); // Reset timer for the next player
+                        repaint();
+                    }
+                });
+            }
+        }, 1000, 1000); // Delay 1 second, repeat every 1 second
+    }
+
+    private void resetTimer() {
+        if (playerTimer != null) {
+            playerTimer.cancel();
+        }
+        startTimer();
     }
 
     /** Custom painting codes on this JPanel */
@@ -128,16 +178,16 @@ public class GameMain extends JPanel {
         // Print status-bar message
         if (currentState == State.PLAYING) {
             statusBar.setForeground(Color.BLACK);
-            statusBar.setText((currentPlayer == Seed.RED) ? "X's Turn" : "O's Turn");
+            statusBar.setText((currentPlayer == Seed.RED) ? "RED's Turn" : "BLUE's Turn");
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again.");
         } else if (currentState == State.RED_WON) {
             statusBar.setForeground(Color.RED);
-            statusBar.setText("'X' Won! Click to play again.");
+            statusBar.setText("'RED' Won! Click to play again.");
         } else if (currentState == State.BLUE_WON) {
             statusBar.setForeground(Color.RED);
-            statusBar.setText("'O' Won! Click to play again.");
+            statusBar.setText("'BLUE' Won! Click to play again.");
         }
     }
 
