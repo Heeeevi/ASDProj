@@ -54,7 +54,7 @@ public class GameMain extends JPanel {
                             if(board.cells[rowI][col].content == Seed.NO_SEED) {
                                 board.cells[rowI][col].content = currentPlayer;
                                 board.stepGame(currentPlayer, rowI, col);
-                                currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+                                currentPlayer = (currentPlayer == Seed.RED) ? Seed.BLUE : Seed.RED;
                                 break;
                             }
                         }
@@ -113,7 +113,7 @@ public class GameMain extends JPanel {
                 board.cells[row][col].content = Seed.NO_SEED; // all cells empty
             }
         }
-        currentPlayer = Seed.CROSS;    // cross plays first
+        currentPlayer = Seed.RED;    // cross plays first
         currentState = State.PLAYING;  // ready to play
     }
 
@@ -128,14 +128,14 @@ public class GameMain extends JPanel {
         // Print status-bar message
         if (currentState == State.PLAYING) {
             statusBar.setForeground(Color.BLACK);
-            statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
+            statusBar.setText((currentPlayer == Seed.RED) ? "X's Turn" : "O's Turn");
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again.");
-        } else if (currentState == State.CROSS_WON) {
+        } else if (currentState == State.RED_WON) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("'X' Won! Click to play again.");
-        } else if (currentState == State.NOUGHT_WON) {
+        } else if (currentState == State.BLUE_WON) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("'O' Won! Click to play again.");
         }
