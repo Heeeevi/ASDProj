@@ -69,6 +69,11 @@ public enum SoundEffect {
             clip.start();     // Start playing
         }
     }
+    public void stop() {
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+        }
+    }
 
     /** Optional static method to pre-load all the sound files. */
     static void initGame() {

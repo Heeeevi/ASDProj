@@ -42,6 +42,19 @@ public class TicTacToe extends JPanel {
     private boolean aiEnabled;  // boolean untuk player ingin bertarung dengan orang atau AI
 
     public TicTacToe() {
+
+//        Object[] boardSize = {"3x3", "5x5"};
+//        String selectedSize = (String) JOptionPane.showInputDialog(
+//                null, "Select Board Size:", "Board Size",
+//                JOptionPane.QUESTION_MESSAGE, null, boardSizeOptions, boardSizeOptions[0]);
+//
+//        if (selectedSize != null && selectedSize.equals("5x5")) {
+//            Board.ROWS = 5;
+//            Board.COLS = 5;
+//        } else {
+//            Board.ROWS = 3;
+//            Board.COLS = 3;
+//        }
         // Pilih mode permainan: Single Player atau Multiplayer
         Object[] options = {"Human vs AI", "Human vs Human"};
         int mode = JOptionPane.showOptionDialog(null, "Select Game Mode:", "Game Mode",
