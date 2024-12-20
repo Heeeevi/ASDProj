@@ -44,7 +44,7 @@ public class Cell {
         // Draw the Seed if it is not empty
         int x1 = col * SIZE + PADDING;
         int y1 = row * SIZE + PADDING;
-        if (content == Seed.CROSS || content == Seed.NOUGHT) {
+        if (content == Seed.RED || content == Seed.BLUE) {
             g.drawImage(content.getImage(), x1, y1, SEED_SIZE, SEED_SIZE, null);
         }
     }
