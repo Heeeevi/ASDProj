@@ -49,7 +49,7 @@ public class TicTacToe extends JPanel {
         aiEnabled = (mode == 0); // Aktifkan AI jika dipilih Human vs AI
 
         if (aiEnabled) {
-            String[] difficulties = {"Noob", "Smart", "Trickster"};
+            String[] difficulties = {"Noob", "Smart", "Trickster", "Boss"};
             String chosenDifficulty = (String) JOptionPane.showInputDialog(null, "Choose AI Difficulty:",
                     "AI Difficulty", JOptionPane.QUESTION_MESSAGE, null, difficulties, difficulties[0]);
             aiPlayer = new AIPlayer(Seed.NOUGHT, chosenDifficulty);
@@ -112,14 +112,6 @@ public class TicTacToe extends JPanel {
         }).start();
     }
 
-//    public static void setVolume(float qty) {
-//        if(volumeSetting != null) {
-//            float oldVolume = volumeSetting.getValue();
-//            float newVolume = Math.max(volumeSetting.getMinimum(), Math.min(volumeSetting.getMaximum(), oldVolume + qty));
-//            volumeSetting.setValue(newVolume);
-//        }
-//    }
-
     public static void displayVolumeSlider(JFrame parentButton) {
         if(volumeSetting == null) {
             JOptionPane.showMessageDialog(parentButton, "Music doesn't play", "Error", JOptionPane.ERROR_MESSAGE);
@@ -167,10 +159,6 @@ public class TicTacToe extends JPanel {
         JPanel navigationPanel = new JPanel(new BorderLayout());
         navigationPanel.add(statusBar, BorderLayout.CENTER);
         navigationPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-//        super.add(statusBar, BorderLayout.PAGE_END);
-
-//        JFrame parentButton = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         setVolume = new JButton("Set Volume");
         setVolume.setFont(new Font("OCR A Extended", Font.PLAIN, 12));

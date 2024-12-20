@@ -34,6 +34,8 @@ public class AIPlayer {
                 return smartMove(board);
             case "Trickster":
                 return tricksterMove(board);
+            case "Boss":
+                return bossMove(board);
             default:
                 return noobMove(board);
         }
@@ -74,6 +76,13 @@ public class AIPlayer {
             }
         }
         return noobMove(board);
+    }
+
+    /** AI Boss: Melakukan pertimbangan yang mendalam dalam bermain */
+    private int[] bossMove(Board board) {
+        AIPlayerMinimax ai = new AIPlayerMinimax(board);
+        ai.setSeed(aiSeed);
+        return ai.move();
     }
 
     /** Cari langkah untuk menang */
