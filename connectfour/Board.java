@@ -72,7 +72,7 @@ public class Board {
             int option = JOptionPane.showOptionDialog(null, player + " Wins", "Do you want to play again?", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choice, choice[0]);
             if(option == 0) newGame();
             else System.exit(0);
-            return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
+            return (player == Seed.RED) ? State.RED_WON : State.BLUE_WON;
         }
 
 //        // Compute and return the new game state
